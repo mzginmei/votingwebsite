@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Document Metadata -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Vendor CSS Files -->
+    {% if view.kwargs.lang == "ar" %}
+        <link href="{% static 'assets/vendors/bootstrap/css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+    {% else %}
+        <link href="{% static 'assets/vendors/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    {% endif %}
+
+
+    <!-- Title of the Document -->
+    <title></title>
+
+</head>
+<body>
+
+
+    <header id="header">
+        {% include "public/nav.html" %}
+    </header>
+
+    <main class="">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer  class="footer">
+        {% include "public/footer.html" %}
+    </footer>
+    
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendors/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>
