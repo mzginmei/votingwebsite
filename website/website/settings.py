@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "dsa-db",
+        "USER": "dsa-user",
+        "PASSWORD": os.getenv("DSA_DB_PASSWORD"),
+        "HOST": "localhost",
+        "PORT": "5432"
     }
 }
 
@@ -127,3 +131,6 @@ STATIC_ROOT = "/home/web/dsa/static/"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = "/home/web/dsa/media"
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
