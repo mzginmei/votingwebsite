@@ -1,9 +1,48 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Nameless</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <a class="navbar-brand fs-3" href="{% url 'home' %}">Nameless</a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- THIS IS WHAT YOU WERE MISSING -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-auto">
+
+        {% if user.is_authenticated %}
+          <li class="nav-item nav-link fs-6">
+            Welcome {{ user.username }},
+            {% if voted %}
+              <span>Thanks for your {{ voted }} votes</span>
+            {% endif %}
+          </li>
+
+          <li class="nav-item">
+            <form action="{% url 'logout' %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="nav-link btn btn-link fs-6">
+                Logout
+              </button>
+            </form>
+          </li>
+
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
+
+      </ul>
+
+    </div>
   </div>
 </nav>

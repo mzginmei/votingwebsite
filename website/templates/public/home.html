@@ -2,7 +2,15 @@
 
 {% block content %}
 <div class="container">
-    Welcome to our nameless project ...
+    <h1> Welcome to our nameless project ... </h1>
+    <h4> Some Description of the project </h4>
+
+    {% if user.is_authenticated %}
+    <a class="btn btn-primary"   href="{% url 'vote' %}">Start Voting </a>
+    {% else  %}
+    <span> Please <a href="{% url 'login' %}">   login </a> to vote </span>
+    {% endif %}
+
 </div>
 
 {% endblock %}
