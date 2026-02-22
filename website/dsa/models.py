@@ -1,3 +1,13 @@
+from django.contrib.auth.models import User
 from django.db import models
 
+
 # Create your models here.
+class Comment(models.Model):
+    text = models.TextField()
+
+
+class Feedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='feedbacks')
+    score = models.PositiveSmallIntegerField(default=0)
