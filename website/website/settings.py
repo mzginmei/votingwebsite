@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dsa-db",
-        "USER": "dsa-user",
-        "PASSWORD": os.getenv("DSA_DB_PASSWORD"),
+        "NAME": "dsadb",
+        "USER": "dsauser",
+        "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": "localhost",
         "PORT": "5432"
     }
