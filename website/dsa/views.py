@@ -19,16 +19,23 @@ class VoteView(TemplateView, LoginRequiredMixin):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 
+		feedbacks = Feedback.objects.filter(user=self.request.user).exclude(score__gt=0)
+		if len(feedbacks) > 0:
+			context["unvoted"] = feedbacks
+			return context
+
 		# Comments the user hasn't voted on yet
 		feedbacks = Feedback.objects.all()
 		unvoted = Comment.objects.exclude(feedbacks__in=feedbacks)
 
 		context["unvoted"] = []
 		for limit in range(0, 10):
-			context["unvoted"].append(unvoted[limit])
+			new_feedback = Feedback(comment=unvoted[limit], user=self.request.user)
+			new_feedback.save()
+			context["unvoted"].append(new_feedback)
 
-		done = Feedback.objects.filter(user=self.request.user)
-		context["voted"] = len(done)
+		# done = Feedback.objects.filter(user=self.request.user)
+		# context["voted"] = len(done)
 
 		return context
 
@@ -39,15 +46,12 @@ class VoteView(TemplateView, LoginRequiredMixin):
 		for key, value in request.POST.items():
 			if not compiler.match(key):
 				continue
-			comment_id = int(key.split("_")[1])
-			print (comment_id, value)
+			feedback_id = int(key.split("_")[1])
 			try:
-				comment = Comment.objects.get(pk=comment_id)
-				feedback = Feedback(comment=comment, user=request.user)
-				feedback.score = 0 if value == "no" else 1
+				feedback = Feedback.objects.get(pk=feedback_id)
+				feedback.score = 1 if value == "nohate" else 2
 				feedback.save()
-			except Comment.DoesNotExist:
+			except Feedback.DoesNotExist:
 				continue
 
-		print (request.POST)
 		return redirect("vote")
