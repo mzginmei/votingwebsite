@@ -124,10 +124,10 @@ STATICFILES_DIRS = [
 
 ]
 
-STATIC_ROOT = BASE_DIR / "collected-static"
+STATIC_ROOT = "/home/web/dsa/static/"
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = "/home/web/dsa/media"
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
