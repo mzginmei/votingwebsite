@@ -21,8 +21,7 @@ from .views import Custom500View, Custom403View, Custom404View
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dsa.urls')),
-
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('account.urls')),
 ]
 
 handler404 = Custom404View.as_view()
