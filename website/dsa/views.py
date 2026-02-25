@@ -2,6 +2,7 @@ import re
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Count
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
@@ -12,8 +13,45 @@ from .models import Comment, Feedback
 class HomeView(TemplateView):
 	template_name = "public/home.html"
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		ranked_users = list(
+			Feedback.objects.filter(score__gt=0)
+			.values("user_id", "user__email", "user__full_name")
+			.annotate(votes=Count("id"))
+			.order_by("-votes", "user__email")
+		)
 
-class VoteView(TemplateView, LoginRequiredMixin):
+		top_limit = 10
+		leaderboard = []
+		current_user_row = None
+
+		for index, row in enumerate(ranked_users, start=1):
+			entry = {
+				"rank": index,
+				"user_id": row["user_id"],
+				"display_name": row["user__full_name"] or row["user__email"],
+				"email": row["user__email"],
+				"votes": row["votes"],
+				"is_current_user": self.request.user.is_authenticated and row["user_id"] == self.request.user.pk,
+			}
+
+			if index <= top_limit:
+				leaderboard.append(entry)
+
+			if entry["is_current_user"]:
+				current_user_row = entry
+
+		context["leaderboard"] = leaderboard
+		context["current_user_row"] = current_user_row
+		context["show_current_user_separate"] = bool(
+			current_user_row and current_user_row["rank"] > top_limit
+		)
+
+		return context
+
+
+class VoteView(LoginRequiredMixin, TemplateView):
 	template_name = "dsa/vote.html"
 
 	def get_context_data(self, **kwargs):

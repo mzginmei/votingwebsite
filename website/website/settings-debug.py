@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account',
     'dsa',
 ]
 
@@ -128,6 +129,8 @@ STATIC_ROOT = "/home/web/dsa/static/"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = "/home/web/dsa/media"
+
+AUTH_USER_MODEL = 'account.Voter'
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
