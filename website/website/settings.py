@@ -24,9 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =  os.getenv('DJANGO_SECRET_KEY', 'django-insecure-*f$3f(md^rz92@%hy5!s0_ede@nk%6)5l@wi1x5sok-bkkezf_') + 'django-insecure-*f$3f(md^rz92@%hy5!s0_ede@nk%6)5l@wi1x5sok-bkkezf_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['vote.kudders.com']
+#ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = ["vote.kudders.com"]
+
+CSRF_TRUSTED_ORIGINS = ["https://vote.kudders.com"]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 
