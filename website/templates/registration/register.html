@@ -1,6 +1,104 @@
 {% extends "base/base.html" %}
 
 {% block content %}
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: linear-gradient(135deg, #eaeaea, #8a888d);
+        min-height: 100vh;
+    }
+
+    
+    .navbar {
+        display: flex !important;
+    }
+    
+    .container {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 550px;  /* bigger */
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+       
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 30px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    form p {
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #444;
+    }
+
+    input {
+        width: 100%;
+        padding: 14px 15px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        transition: 0.3s ease;
+    }
+
+    input:focus {
+        border-color: #748671;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(175, 196, 176, 0.2);
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 9px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #46583f, #7f9282);
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .mt-3 {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .mt-3 a {
+        color: #7a8577;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .mt-3 a:hover {
+        text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
 <div class="container py-4">
   <h2>Register</h2>
   <form method="post">
