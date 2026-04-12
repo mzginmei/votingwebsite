@@ -2,3 +2,4 @@ comments_cleaned_300k.txt
 *.pyc
 .idea/
 webenv/*
+.venv/
