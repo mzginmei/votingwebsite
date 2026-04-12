@@ -11,28 +11,218 @@
                 {% for feedback in unvoted %}
                     <div class="border rounded p-3 mb-3" style="max-width: 700px; margin: 0 auto;">
                         <h5 class="mb-3">{{ feedback.comment.text }}</h5>
+                            <div class="d-flex flex-column gap-2 mb-3">
+                                <label class="d-flex align-items-center gap-2 text-secondary">
+                                    <input
+                                        type="radio"
+                                        name="status_{{ feedback.id }}"
+                                        value="novote"
+                                        id="novote_{{ feedback.id }}"
+                                        class="status-radio"
+                                        required
+                                        checked
+                                    >
+                                    <b>دەنگم نەداوە</b>
+                                </label>
 
-                        <div class="d-flex gap-3">
-                            <label class="d-flex align-items-center gap-2 text-danger">
-                                <input type="radio" name="vote_{{ feedback.id }}" value="hate" required >
-                                <b>Hate</b>
-                            </label>
+                                <label class="d-flex align-items-center gap-2">
+                                    <input
+                                        type="radio"
+                                        name="status_{{ feedback.id }}"
+                                        value="normal"
+                                        id="normal_{{ feedback.id }}"
+                                        class="status-radio"
+                                        required
+                                    >
+                                    <b>ئاسایی</b> <small class="text-muted">دەستخۆشی، ئەرێنی، پشتگیری کردن، ڕەخنەی بونیادنەر</small>
+                                </label>
 
-                            <label class="d-flex align-items-center gap-2">
-                                <input type="radio" name="vote_{{ feedback.id }}" value="nohate" required>
-                                Non-Hate
-                            </label>
+                                <label class="d-flex align-items-center gap-2 text-danger">
+                                    <input
+                                        type="radio"
+                                        name="status_{{ feedback.id }}"
+                                        value="hasProblems"
+                                        id="hasProblems_{{ feedback.id }}"
+                                        class="status-radio"
+                                        required
+                                    >
+                                    <b>کێشەی هەیە</b>
+                                </label>
+                            </div>
 
+                            <label class="form-check-label d-block mb-2"><b>جۆری کێشە</b></label>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="2"
+                                    id="check_2_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_2_{{ feedback.id }}">
+                                    ڕەگەزپەرستی/ نەتەوەپەرستی
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="3"
+                                    id="check_3_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_3_{{ feedback.id }}">
+                                    وشەی نەشیاو/ سێکسیزم
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="4"
+                                    id="check_4_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_4_{{ feedback.id }}">
+                                    وشەی ناشرین/ جنێو
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="5"
+                                    id="check_5_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_5_{{ feedback.id }}">
+                                    ڕەخنەی ڕووخێنەر
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="6"
+                                    id="check_6_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_6_{{ feedback.id }}">
+                                    گەڤ (هەڕەشەی کەسی)
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="7"
+                                    id="check_7_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_7_{{ feedback.id }}">
+                                    نەرێنی
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="8"
+                                    id="check_8_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_8_{{ feedback.id }}">
+                                    دڵتەنگی/ خەم و خەفەت
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="9"
+                                    id="check_9_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_9_{{ feedback.id }}">
+                                    ترس و تۆقاندن
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input feedback-option"
+                                    type="checkbox"
+                                    name="vote_{{ feedback.id }}"
+                                    value="10"
+                                    id="check_10_{{ feedback.id }}"
+                                    disabled
+                                >
+                                <label class="form-check-label" for="check_10_{{ feedback.id }}">
+                                    توانج/ تعلیق
+                                </label>
+                            </div>
                         </div>
-                    </div>
                 {% endfor %}
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-lg fs-4 btn-primary">Save and load new commits</button>
+                    <button type="submit" id="submit-btn" class="btn btn-lg fs-4 btn-primary" disabled>خەزن و بارکردنی نوێ</button>
                 </div>
             {% else %}
                 <p class="text-center">No comments left to vote on.</p>
             {% endif %}
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const submitBtn = document.getElementById("submit-btn");
+            const feedbackBlocks = document.querySelectorAll(".border.rounded");
+
+            function checkAllVoted() {
+                const anyNoVote = Array.from(document.querySelectorAll(".status-radio"))
+                    .filter(r => r.value === "novote" && r.checked).length > 0;
+                submitBtn.disabled = anyNoVote;
+            }
+
+            feedbackBlocks.forEach((block) => {
+                const novoteRadio = block.querySelector('input[type="radio"][value="novote"]');
+                const normalRadio = block.querySelector('input[type="radio"][value="normal"]');
+                const problemsRadio = block.querySelector('input[type="radio"][value="hasProblems"]');
+                const options = block.querySelectorAll(".feedback-option");
+
+                function updateOptions() {
+                    const enabled = problemsRadio.checked;
+                    options.forEach((checkbox) => {
+                        checkbox.disabled = !enabled;
+                        if (!enabled) {
+                            checkbox.checked = false;
+                        }
+                    });
+                    checkAllVoted();
+                }
+
+                novoteRadio.addEventListener("change", updateOptions);
+                normalRadio.addEventListener("change", updateOptions);
+                problemsRadio.addEventListener("change", updateOptions);
+
+                updateOptions();
+            });
+        });
+    </script>
 {% endblock %}
