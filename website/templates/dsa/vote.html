@@ -46,137 +46,27 @@
                                         class="status-radio"
                                         required
                                     >
-                                    <b>کێشەی هەیە</b>
+                                    <b>نائاسایی (کێشەی هەیە)</b>
                                 </label>
                             </div>
 
                             <label class="form-check-label d-block mb-2"><b>جۆری کێشە</b></label>
+                            {% for option in feedback_options %}
+                                <div class="form-check mb-2">
+                                    <input
+                                        class="form-check-input feedback-option"
+                                        type="checkbox"
+                                        name="vote_{{ feedback.id }}"
+                                        value="{{ option.id }}"
+                                        id="check_{{ option.id }}_{{ feedback.id }}"
+                                        disabled
+                                    >
+                                    <label class="form-check-label" for="check_{{ option.id }}_{{ feedback.id }}">
+                                        {{ option.name }}
+                                    </label>
+                                </div>
+                            {% endfor %}
 
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="2"
-                                    id="check_2_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_2_{{ feedback.id }}">
-                                    ڕەگەزپەرستی/ نەتەوەپەرستی
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="3"
-                                    id="check_3_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_3_{{ feedback.id }}">
-                                    وشەی نەشیاو/ سێکسیزم
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="4"
-                                    id="check_4_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_4_{{ feedback.id }}">
-                                    وشەی ناشرین/ جنێو
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="5"
-                                    id="check_5_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_5_{{ feedback.id }}">
-                                    ڕەخنەی ڕووخێنەر
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="6"
-                                    id="check_6_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_6_{{ feedback.id }}">
-                                    گەڤ (هەڕەشەی کەسی)
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="7"
-                                    id="check_7_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_7_{{ feedback.id }}">
-                                    نەرێنی
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="8"
-                                    id="check_8_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_8_{{ feedback.id }}">
-                                    دڵتەنگی/ خەم و خەفەت
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="9"
-                                    id="check_9_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_9_{{ feedback.id }}">
-                                    ترس و تۆقاندن
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                    class="form-check-input feedback-option"
-                                    type="checkbox"
-                                    name="vote_{{ feedback.id }}"
-                                    value="10"
-                                    id="check_10_{{ feedback.id }}"
-                                    disabled
-                                >
-                                <label class="form-check-label" for="check_10_{{ feedback.id }}">
-                                    توانج/ تعلیق
-                                </label>
-                            </div>
                         </div>
                 {% endfor %}
 

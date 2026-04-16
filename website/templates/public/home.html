@@ -3,7 +3,7 @@
 {% block content %}
 <style>
     body{
-        font-family: "Segoe UI", Tahoma, sans-serif;
+        /* font-family: "Segoe UI", Tahoma, sans-serif; */
         background: linear-gradient(135deg,#f4f6f9,#dfe9f3);
         margin:0;
         padding:40px 20px;
@@ -11,7 +11,7 @@
         line-height:1.8;
     }
     .p1{
-        font-family: sans-serif;
+        /* font-family: sans-serif; */
         text-align: right;
         font-size: 1.3em;
         padding: 12px;
@@ -80,7 +80,6 @@
     background-color: #f9e7ff; /* light pink */
     padding: 25px;
     border-radius: 12px;
-    font-family: sans-serif;
     line-height: 1.9;
     border-left: 6px solid #876a8d; /* red left border */
     direction: rtl; /* important for Kurdish */
@@ -117,19 +116,13 @@
 دەستخۆشی، ڕای ئەرێنی، پشتگیریکردن
 <br><br>
 
-<b>2. نائاسایی/ ناڕەوا</b><br>
-ڕەگەزپەرستی/ نەتەوەپەرستی<br>
-وشەی نەشیاو/ سێکسیزم<br>
-وشەی ناشرین/ جنێو<br>
-ڕەخنەی ڕووخێنەر<br>
-گەڤ (هەڕەشەی کەسی)<br>
-نەرێنی<br>
-دڵتەنگی/ خەم و خەفەت<br>
-ترس و تۆقاندن<br>
-ڕق/توڕەیی<br>
-توانج/ تعلیق
-<br><br>
+<b>2. نائاسایی/ ناڕەوا</b>
 
+<ul>
+{% for option in feedback_options %}
+    <li><b>{{ option.name }}</b> <i class="mx-1"> {{ option.description }} </i></li>
+{% endfor %}
+</ul>
 واتە لەوانەیە کۆمێنتەکە کاتێک کە نائاسایی/ ناڕەوایە لە هەمان کاتدا کۆمێنتێکی (ڕەگەزپەرستی + وشەی نەشیاو + ڕەخنە...) بێت.<br>
 بۆیە دەتوانت هەموو ئەو ناوەڕۆکانە هەڵبژێری کە کۆمێنتەکەیان لێ پێکدێت.
 <br><br>
@@ -166,55 +159,18 @@
 
 
 </div>
+<div class="text-center ">
+    <a class="btn btn-primary btn-large btn-block vote-btn fs-3" href="{% url 'vote' %}">دەنگ بدە</a>
+</div>
 </div>
 
-<div class="btn-center">
-    <a href="/vote" class="vote-btn">Start Voting</a>
 
 
 <div class="card mt-4 shadow-sm">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Your Votes</h5>
+        <h5 class="mb-0">Your Votes : {{ feedbacks|length }}</h5>
     </div>
 
-    <div class="card-body p-0">
-        {% if leaderboard %}
-            <div class="table-responsive">
-                <table class="table mb-0 align-middle">
-                    <tbody>
-                        {% for row in leaderboard %}
-                            <tr class="{% if row.rank == 1 %}table-warning fw-semibold{% endif %}">
-                                <td class="text-center">
-                                    {% if row.rank == 1 %}
-                                        <span class="badge text-bg-warning text-dark"></span>
-                                    {% else %}
-                                        #{{ row.rank }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if row.is_current_user %}
-                                        <strong>You</strong>
-                                    {% else %}
-                                        {{ row.display_name }}
-                                    {% endif %}
-                                </td>
-                                <td class="text-end">{{ row.votes }} Votes</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            {% if show_current_user_separate %}
-                <div class="p-3 border-top bg-light-subtle">
-                    <strong>#{{ current_user_row.rank }} You</strong>
-                    <span class="float-end">{{ current_user_row.votes }} Votes</span>
-                </div>
-            {% endif %}
-        {% else %}
-            <p class="m-3 text-muted">No votes yet.</p>
-        {% endif %}
-    </div>
 </div>
 
 </div>
