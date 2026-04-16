@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Comment, Feedback
+from .models import Comment, Feedback, FeedbackOption
 # Register your models here.
 
 
 admin.site.register(Comment)
 admin.site.register(Feedback)
+admin.site.register(FeedbackOption)
