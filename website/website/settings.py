@@ -28,7 +28,7 @@ DEBUG = False
 
 #ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = ["vote.kudders.com"]
+ALLOWED_HOSTS = ["vote.kudders.com", 'localhost', '127.0.0.1', "www.vote.kudders.com"]
 
 CSRF_TRUSTED_ORIGINS = ["https://vote.kudders.com"]
 
