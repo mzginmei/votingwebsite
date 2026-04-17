@@ -46,8 +46,10 @@ class VoteView(LoginRequiredMixin, TemplateView):
 		feedbacks = Feedback.objects.all()
 		unvoted = Comment.objects.exclude(feedbacks__in=feedbacks)
 
+		commits_per_page = 3
+
 		context["unvoted"] = []
-		for limit in range(0, 10):
+		for limit in range(0, commits_per_page):
 			new_feedback = Feedback(comment=unvoted[limit], user=self.request.user)
 			new_feedback.save()
 			context["unvoted"].append(new_feedback)
