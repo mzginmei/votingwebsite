@@ -1,15 +1,16 @@
 {% extends "base/base.html" %}
+{% load dsa_tags %}
 
 {% block content %}
     <div class="container pb-5" dir="rtl">
         <h1 class="text-center"> Vote </h1>
         <hr>
-        <form method="post">
+        <form method="post" id="vote-form" novalidate>
             {% csrf_token %}
 
             {% if unvoted %}
                 {% for feedback in unvoted %}
-                    <div class="border rounded p-3 mb-3" style="max-width: 700px; margin: 0 auto;">
+                    <div class="border rounded p-3 mb-3 feedback-block" style="max-width: 700px; margin: 0 auto;" data-feedback-id="{{ feedback.id }}">
                         <h5 class="mb-3">{{ feedback.comment.text }}</h5>
                             <div class="d-flex flex-column gap-2 mb-3">
                                 <label class="d-flex align-items-center gap-2 text-secondary">
@@ -20,7 +21,11 @@
                                         id="novote_{{ feedback.id }}"
                                         class="status-radio"
                                         required
-                                        checked
+                                        {% if selected_statuses %}
+                                            {% if selected_statuses|get_item:feedback.id == "novote" %}checked{% endif %}
+                                        {% else %}
+                                            checked
+                                        {% endif %}
                                     >
                                     <b>دەنگم نەداوە</b>
                                 </label>
@@ -33,6 +38,7 @@
                                         id="normal_{{ feedback.id }}"
                                         class="status-radio"
                                         required
+                                        {% if selected_statuses|get_item:feedback.id == "normal" %}checked{% endif %}
                                     >
                                     <b>ئاسایی</b> <small class="text-muted">دەستخۆشی، ئەرێنی، پشتگیری کردن، ڕەخنەی بونیادنەر٠٠</small>
                                 </label>
@@ -45,6 +51,7 @@
                                         id="hasProblems_{{ feedback.id }}"
                                         class="status-radio"
                                         required
+                                        {% if selected_statuses|get_item:feedback.id == "hasProblems" %}checked{% endif %}
                                     >
                                     <b>نائاسایی (کێشەی هەیە)</b>
                                 </label>
@@ -60,12 +67,17 @@
                                         value="{{ option.id }}"
                                         id="check_{{ option.id }}_{{ feedback.id }}"
                                         disabled
+                                        {% if option.id in selected_options|get_item:feedback.id %}checked{% endif %}
                                     >
                                     <label class="form-check-label" for="check_{{ option.id }}_{{ feedback.id }}">
                                         {{ option.name }}
                                     </label>
                                 </div>
                             {% endfor %}
+
+                            <div class="invalid-feedback d-block problem-error{% if not vote_errors|get_item:feedback.id %} d-none{% endif %}" data-default-message="At least one problem type must be selected.">
+                                یەکێک لە جۆرە کێشەکان دەبێت هەڵبژێردرێت.
+                            </div>
 
                         </div>
                 {% endfor %}
@@ -81,13 +93,24 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("vote-form");
             const submitBtn = document.getElementById("submit-btn");
-            const feedbackBlocks = document.querySelectorAll(".border.rounded");
+            const feedbackBlocks = document.querySelectorAll(".feedback-block");
+
+            function blockHasValidationError(block) {
+                const problemsRadio = block.querySelector('input[type="radio"][value="hasProblems"]');
+                if (!problemsRadio.checked) {
+                    return false;
+                }
+
+                return !Array.from(block.querySelectorAll(".feedback-option")).some((checkbox) => checkbox.checked);
+            }
 
             function checkAllVoted() {
                 const anyNoVote = Array.from(document.querySelectorAll(".status-radio"))
                     .filter(r => r.value === "novote" && r.checked).length > 0;
-                submitBtn.disabled = anyNoVote;
+                const hasInvalidProblemsVote = Array.from(feedbackBlocks).some(blockHasValidationError);
+                submitBtn.disabled = anyNoVote || hasInvalidProblemsVote;
             }
 
             feedbackBlocks.forEach((block) => {
@@ -95,6 +118,7 @@
                 const normalRadio = block.querySelector('input[type="radio"][value="normal"]');
                 const problemsRadio = block.querySelector('input[type="radio"][value="hasProblems"]');
                 const options = block.querySelectorAll(".feedback-option");
+                const errorMessage = block.querySelector(".problem-error");
 
                 function updateOptions() {
                     const enabled = problemsRadio.checked;
@@ -104,15 +128,38 @@
                             checkbox.checked = false;
                         }
                     });
+                    if (!errorMessage.textContent.trim()) {
+                        errorMessage.textContent = errorMessage.dataset.defaultMessage;
+                    }
+                    errorMessage.classList.toggle("d-none", !blockHasValidationError(block));
                     checkAllVoted();
                 }
 
                 novoteRadio.addEventListener("change", updateOptions);
                 normalRadio.addEventListener("change", updateOptions);
                 problemsRadio.addEventListener("change", updateOptions);
+                options.forEach((checkbox) => checkbox.addEventListener("change", updateOptions));
 
                 updateOptions();
             });
+
+            if (form) {
+                form.addEventListener("submit", function (event) {
+                    const hasValidationError = Array.from(feedbackBlocks).some((block) => {
+                        const invalid = blockHasValidationError(block);
+                        const errorMessage = block.querySelector(".problem-error");
+                        if (!errorMessage.textContent.trim()) {
+                            errorMessage.textContent = errorMessage.dataset.defaultMessage;
+                        }
+                        errorMessage.classList.toggle("d-none", !invalid);
+                        return invalid;
+                    });
+
+                    if (hasValidationError) {
+                        event.preventDefault();
+                    }
+                });
+            }
         });
     </script>
 {% endblock %}
